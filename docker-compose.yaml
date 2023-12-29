@@ -1,0 +1,7 @@
+version: '3'
+
+services:
+  beast:
+    build: ./beast
+    ports:
+      - "8080:8080"
