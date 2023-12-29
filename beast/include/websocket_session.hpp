@@ -49,7 +49,7 @@ private:
     void
     on_send(boost::shared_ptr<std::string const> const& ss);
     void
-    handle_base_api(const nlohmann::json& json_msg);
+    handle_api(const nlohmann::json& json_msg);
 };
 
 template<class Body, class Allocator>

@@ -39,8 +39,8 @@ void websocket_session::on_read(beast::error_code ec, std::size_t bytes_transfer
         nlohmann::json json_msg = nlohmann::json::parse(received_msg);
         if (json_msg.contains("method")) {
             std::string method = json_msg["method"];
-            if (method == "base-api") {
-                handle_base_api(json_msg);
+            if (method == "api") {
+                handle_api(json_msg);
                 // want to implement something much more modular...
             } else {
                 std::string error_msg = "ERROR: Invalid method";
@@ -83,9 +83,27 @@ void websocket_session::on_write(beast::error_code ec, std::size_t) {
         ws_.async_write(net::buffer(*queue_.front()), beast::bind_front_handler(&websocket_session::on_write, shared_from_this()));
 }
 
-void websocket_session::handle_base_api(const nlohmann::json& json_msg) {
-    for (auto& element : json_msg.items()) {
-        std::cout << element.key() << ": " << element.value() << std::endl;
+void websocket_session::handle_api(const nlohmann::json& json_msg) {
+    if (!json_msg.contains("method") || !json_msg.contains("action") || 
+        !json_msg.contains("username") || !json_msg.contains("password")) {
+        std::string error_msg = "ERROR: Missing required fields in the request";
+        state_->send(error_msg);
+        return;
     }
-}
 
+    nlohmann::json response;
+    if (json_msg["action"] == "user-create") {
+        //create the user
+        response = {
+            {"status", "success"},
+            {"message", "user-create success"}
+        };
+    } else {
+        // Handle other actions or error
+        response = {
+            {"status", "error"},
+            {"message", "Invalid action"}
+        };
+    }
+    state_->send(response.dump());
+}
