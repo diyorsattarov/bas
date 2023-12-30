@@ -1,5 +1,4 @@
 #include "../include/websocket_session.hpp"
-#include <iostream>
 
 // Constructor
 websocket_session::websocket_session(tcp::socket&& socket, boost::shared_ptr<shared_state> const& state)
@@ -84,26 +83,4 @@ void websocket_session::on_write(beast::error_code ec, std::size_t) {
 }
 
 void websocket_session::handle_api(const nlohmann::json& json_msg) {
-    if (!json_msg.contains("method") || !json_msg.contains("action") || 
-        !json_msg.contains("username") || !json_msg.contains("password")) {
-        std::string error_msg = "ERROR: Missing required fields in the request";
-        state_->send(error_msg);
-        return;
-    }
-
-    nlohmann::json response;
-    if (json_msg["action"] == "user-create") {
-        //create the user
-        response = {
-            {"status", "success"},
-            {"message", "user-create success"}
-        };
-    } else {
-        // Handle other actions or error
-        response = {
-            {"status", "error"},
-            {"message", "Invalid action"}
-        };
-    }
-    state_->send(response.dump());
 }

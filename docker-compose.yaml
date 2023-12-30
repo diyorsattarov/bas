@@ -5,3 +5,15 @@ services:
     build: ./beast
     ports:
       - "8080:8080"
+  
+  mysql:
+    image: mysql:8.2.0
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
