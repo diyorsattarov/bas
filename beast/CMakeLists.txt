@@ -16,12 +16,15 @@ file (GLOB APP_FILES
 )
 
 source_group ("" FILES ${APP_FILES})
+find_package(Boost REQUIRED COMPONENTS headers)
+find_package(Threads REQUIRED)
+find_package(OpenSSL REQUIRED)
 
 add_executable (beast-service
     ${APP_FILES}
     ${BOOST_BEAST_FILES}
 )
 
-target_link_libraries(beast-service pthread ${Boost_SYSTEM_LIBRARY} )
+target_link_libraries(beast-service pthread ${Boost_SYSTEM_LIBRARY} Boost::headers Threads::Threads OpenSSL::Crypto OpenSSL::SSL)
 
 set_property(TARGET beast-service PROPERTY FOLDER "beast-service")

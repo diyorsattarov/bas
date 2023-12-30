@@ -4,6 +4,7 @@
 #include "net.hpp"
 #include "beast.hpp"
 #include "shared_state.hpp"
+#include <boost/mysql.hpp>
 #include <unordered_map>
 #include <cstdlib>
 #include <memory>
@@ -11,7 +12,7 @@
 #include <vector>
 #include <random>
 #include <chrono>
-
+#include <iostream>
 // Forward declaration
 class shared_state;
 

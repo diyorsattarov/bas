@@ -12,8 +12,8 @@ RUN apt-get update && apt-get install -y \
     libasio-dev
 
 # Set the Boost version
-ARG BOOST_VERSION=1.75.0
-ARG BOOST_VERSION_UNDERSCORE=1_75_0
+ARG BOOST_VERSION=1.84.0
+ARG BOOST_VERSION_UNDERSCORE=1_84_0
 
 # Download and unpack Boost
 RUN wget https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION_UNDERSCORE}.tar.gz \
